@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="captureRate"></div>
+    <script>
+
+        fetch('https://pokeapi.co/api/v2/pokemon/' + pokemonNumber)
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(data){
+                console.log(data);
+                var speciesUrl = data.species.url;
+                fetch(speciesUrl)
+                    .then(function(secondResponse){
+                        return secondResponse.json();
+                    })
+                    .then(function(secondData){
+                        console.log(secondData)
+                        var captureRate = secondData.capture_rate;
+                        var captureRateElement = document.querySelector('#captureRate'); 
+                        captureRateElement.textContent = captureRate; 
+                    })
+            })
+        
+            var taco = 'tutor'
+        // string concatenation
+        `byron is a ${taco}`
+
+
+
+    </script>
+</body>
+</html>
