@@ -5,14 +5,20 @@
 var cities = [];
 
 
-pastSearchedEl = document.querySelector("#Past-Searched-Cities");
-listOfSearchedCitiesEl = document.getElementById("List-Of-Searched-Cities");
-currentForecastSearchedCityEl = document.getElementById("Current-Forecast-Searched-City");
-// currentForecastContainer = 
+var pastSearchedEl = document.querySelector("#Past-Searched-Cities");
+var listOfSearchedCitiesEl = document.getElementById("List-Of-Searched-Cities");
+var currentForecastSearchedCityEl = document.getElementById("Current-Forecast-Searched-City");
+var forecastInfoEl = document.querySelector("#Forecast-Info");
+var currentTempLiEl = document.querySelector("#current-temp");
+var currentWeatherLiEl = document.querySelector("#current-weather");
+var currentHumidityLiEl = document.querySelector("#current-humidity");
+var currentWindLiEl = document.querySelector("#current-wind");
+var currentUVLiEl = document.querySelector("#current-uv");
+var currentDayLiEl = document.querySelector("#current-day");
+
 
 var searchBtnEl = document.querySelector("#search-btn");
 
-//var submitBtn = document.getElementById("search-btn");
 
 console.log("I am working!");
 
@@ -27,10 +33,10 @@ searchBtnEl.addEventListener("click", function () {
     console.log(requestURL)
     // -- use the url string to make a call to the coords api w/ city name
     fetch(requestURL)
-        .then(function(response) {
+        .then(function (response) {
             return response.json()
         })
-        .then(function(data){
+        .then(function (data) {
             console.log(data);
             // this is where I do all the crap
             // -- -- once you have lat and lon
@@ -45,23 +51,36 @@ searchBtnEl.addEventListener("click", function () {
             // -- -- create a call to the oneweather api
             // -- -- --  fetch response and data
             fetch(mainRequestURL)
-                .then(function(secondResponse){
+                .then(function (secondResponse) {
                     return secondResponse.json()
                 })
-                .then(function(secondData){
+                .then(function (secondData) {
                     console.log(secondData);
+                    console.log(secondData.current.temp);
+                    // var kelvin = 
+                    // var convertKelvinToF =  9/5(K - 273) + 32;
+                    currentTempLiEl.textContent = "Temperature: " + secondData.current.temp;
+                    //cannot convert weather icon to img
+                    currentWeatherLiEl.textContent = "Weather: " + secondData.current.weather[0].main;
+                    currentHumidityLiEl.textContent = "Humidity: " + secondData.current.humidity;
+                    currentWindLiEl.textContent = "Wind: " + secondData.current.wind_speed + "MPH";
+                    currentUVLiEl.textContent = "UVI: " + secondData.current.uvi;
+                    // currentDayLiEl.textContent = 
                 })
             // -- -- --  display current weather for each city
-
+            currentForecastSearchedCityEl.textContent = data[0].name;
             
+            
+
+
         });
 
 
-    
-    
-    
-    
-    
+
+
+
+
+
 
 
     // when you do this function you'll need to call the following functions: 
@@ -105,9 +124,9 @@ function saveCityInfo() {
     //have to use localStorage with set item method
 }
 
-function convertKelvinToF() {
+// function convertKelvinToF() {
 
-}
+// }
 
 function submitHandler() {
 
