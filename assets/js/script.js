@@ -66,19 +66,23 @@ searchBtnEl.addEventListener("click", function () {
 
                     // for each of the next 5 days in the future weather array
                     for (var i = 0; i < 5; i++) {
-                        // var dateEl = $("<li class= 'day'>").text(moment.unix(data.daily[i].dt).format('dddd l'));
+                        let apiData = secondData.daily[i+1];
+                        let timestamp = moment.unix(apiData.dt).format('dddd l');
+                        let dayEl = document.querySelector("#date" + i);
+                        dayEl.textContent = timestamp;
+                        // var dateEl = $("<li class= 'day'>").text();
                         // getting the tempature & converting to f
-                        var tempAsF2 = Math.floor(9 / 5 * (secondData.daily[i].temp.day - 273) + 32);
+                        var tempAsF2 = Math.floor(9 / 5 * (apiData.temp.day - 273) + 32);
                         // reach into the html and grab the temp slot for the day you're on
                         var tempEl = document.querySelector('#temp' + i);
                         // put the data into the tempature element
                         tempEl.textContent = tempAsF2;
                         var weatherEl = document.querySelector("#weather" + i);
-                        weatherEl.textContent = secondData.daily[i].weather[0].main;
+                        weatherEl.textContent = apiData.weather[0].main;
                         var humidityEl = document.querySelector("#humidity" + i);
-                        humidityEl.textContent = secondData.daily[i].humidity;
+                        humidityEl.textContent = apiData.humidity;
                         var windEl = document.querySelector("#wind" + i);
-                        windEl.textContent = secondData.daily[i].wind_speed;
+                        windEl.textContent = apiData.wind_speed;
                         
 
 
@@ -96,76 +100,11 @@ searchBtnEl.addEventListener("click", function () {
 
 
 
-
-
-
-
-
-    // when you do this function you'll need to call the following functions: 
-    // saveCityInfo();
-    // convertKelvinToF();{
-
 });
 
-// --- display current date, current temperature,current wind, current humidity, and current uv index (for uv index you'll need to create a conditional statement showing green, yellow or red depending on whether it is favorable, moderate, or severe)
-// then you'll need to display 5 day forecast 
-//--- display date for each of the next 5 days, corresponding icon to show weather (will probably have to create conditional statements saying if snowy display this. This also is probably going to be done in tandem with css and awesome fonts. Remember to link awesome font). 5 day temperatures, wind, and humidity 
-// save results to local storage-- this will happen when you search for each individual city
-// function getCurrentWeatherData(cityName) {
-
-//     // later on in the function you'll need to replace some of the url string with the one you'll need once you get the lat and lon
-
-
-//     fetch(requestURL)
-//         .then(function (response) {
-//             return response.json();
-
-//         })
-//         .then(function (data) {
-//             console.log(data);
-//         })
-// }
-
-function displayCurrentWeatherData() {
-
-}
-
-function getFiveDayForecast() {
-
-}
-
-function displayFiveDayForecast() {
-
-}
-
-function saveCityInfo() {
-    //have to use localStorage with set item method
-}
-
-// function convertKelvinToF() {
-
-// }
-
-function submitHandler() {
-
-
-}
 
 
 
 
 
-//This is how you call the api for 5 day forecast. Remember you have to set the count to 5
-//api.openweathermap.org/data/2.5/forecast/daily?lat={lat}&lon={lon}&cnt={cnt}&appid={API key} cnt-stands for count and you will be setting the variable of count to 5
 
-
-
-//this is the data you'll need to display along with the weather icon (have to figure that out)--this is all from the onecall api//will need to use another api call for the 5 day forecast because this is not included in onecall
-//data.daily.temp.day
-//data.daily.humidity
-//data.daily.wind_speed
-//data.current.uvi
-
-
-
-//for all temperature values you will have to convert from Kelvin to Celsius
