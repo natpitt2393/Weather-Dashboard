@@ -1,8 +1,4 @@
-// add an input field for city
-// add a button to click(submit)
-// add event listener to button
-// event listener should
-var cities = [];
+var searchedCities = [];
 
 
 var pastSearchedEl = document.querySelector("#Past-Searched-Cities");
@@ -55,17 +51,39 @@ searchBtnEl.addEventListener("click", function () {
                     return secondResponse.json()
                 })
                 .then(function (secondData) {
+                    // got the current weather data added it to the DOM
                     console.log(secondData);
                     console.log(secondData.current.temp);
-                    // var kelvin = 
-                    // var convertKelvinToF =  9/5(K - 273) + 32;
-                    currentTempLiEl.textContent = "Temperature: " + secondData.current.temp;
+                    var tempAsKelvin = secondData.current.temp;
+                    var tempAsF = Math.floor(9 / 5 * (tempAsKelvin - 273) + 32);
+                    currentTempLiEl.textContent = "Temperature: " + tempAsF;
                     //cannot convert weather icon to img
                     currentWeatherLiEl.textContent = "Weather: " + secondData.current.weather[0].main;
-                    currentHumidityLiEl.textContent = "Humidity: " + secondData.current.humidity;
+                    currentHumidityLiEl.textContent = "Humidity: " + secondData.current.humidity + "%";
                     currentWindLiEl.textContent = "Wind: " + secondData.current.wind_speed + "MPH";
                     currentUVLiEl.textContent = "UVI: " + secondData.current.uvi;
-                    // currentDayLiEl.textContent = 
+                    currentDayLiEl.textContent = moment().format('MMMM Do YYYY');
+
+                    // for each of the next 5 days in the future weather array
+                    for (var i = 0; i < 5; i++) {
+                        // var dateEl = $("<li class= 'day'>").text(moment.unix(data.daily[i].dt).format('dddd l'));
+                        // getting the tempature & converting to f
+                        var tempAsF2 = Math.floor(9 / 5 * (secondData.daily[i].temp.day - 273) + 32);
+                        // reach into the html and grab the temp slot for the day you're on
+                        var tempEl = document.querySelector('#temp' + i);
+                        // put the data into the tempature element
+                        tempEl.textContent = tempAsF2;
+                        var weatherEl = document.querySelector("#weather" + i);
+                        weatherEl.textContent = secondData.daily[i].weather[0].main;
+                        var humidityEl = document.querySelector("#humidity" + i);
+                        humidityEl.textContent = secondData.daily[i].humidity;
+                        var windEl = document.querySelector("#wind" + i);
+                        windEl.textContent = secondData.daily[i].wind_speed;
+                        
+
+
+                    }
+
                 })
             // -- -- --  display current weather for each city
             currentForecastSearchedCityEl.textContent = data[0].name;
