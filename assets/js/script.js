@@ -1,4 +1,6 @@
-var searchedCities = [];
+if (!localStorage.getItem("Searched Cities")) {
+    localStorage.setItem("Searched Cities", JSON.stringify([]));
+}
 
 
 var pastSearchedEl = document.querySelector("#Past-Searched-Cities");
@@ -22,6 +24,15 @@ searchBtnEl.addEventListener("click", function () {
     // -- get the input from the input box
     var inputCityEl = document.querySelector("#City-Name");
     var cityValue = inputCityEl.value
+
+    var cities = JSON.parse(localStorage.getItem("Searched Cities"))
+
+    cities.push(cityValue)
+    localStorage.setItem("Searched Cities", JSON.stringify(cities))
+
+
+    listOfSearchedCitiesEl.textContent = JSON.parse(localStorage.getItem("Searched Cities"));
+
     console.log(cityValue);
     // -- use city to create the url string
     var requestURL = "https://api.openweathermap.org/geo/1.0/direct?appid=674f3c35b53255930ed3d3a7177a78b6&";
