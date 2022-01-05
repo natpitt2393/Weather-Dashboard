@@ -13,12 +13,13 @@ var currentHumidityLiEl = document.querySelector("#current-humidity");
 var currentWindLiEl = document.querySelector("#current-wind");
 var currentUVLiEl = document.querySelector("#current-uv");
 var currentDayLiEl = document.querySelector("#current-day");
-
+var currentDayIconEl = document.querySelector("#current-weather-icon")
 
 var searchBtnEl = document.querySelector("#search-btn");
 
 
 console.log("I am working!");
+listOfSearchedCitiesEl.textContent = JSON.parse(localStorage.getItem("Searched Cities"));
 
 searchBtnEl.addEventListener("click", function () {
     // -- get the input from the input box
@@ -31,7 +32,6 @@ searchBtnEl.addEventListener("click", function () {
     localStorage.setItem("Searched Cities", JSON.stringify(cities))
 
 
-    listOfSearchedCitiesEl.textContent = JSON.parse(localStorage.getItem("Searched Cities"));
 
     console.log(cityValue);
     // -- use city to create the url string
@@ -74,7 +74,7 @@ searchBtnEl.addEventListener("click", function () {
                     currentWindLiEl.textContent = "Wind: " + secondData.current.wind_speed + "MPH";
                     currentUVLiEl.textContent = "UVI: " + secondData.current.uvi;
                     currentDayLiEl.textContent = moment().format('MMMM Do YYYY');
-
+                    currentDayIconEl.setAttribute("src", `http://openweathermap.org/img/w/${secondData.current.weather[0].icon}.png`)
                     // for each of the next 5 days in the future weather array
                     for (var i = 0; i < 5; i++) {
                         let apiData = secondData.daily[i+1];
@@ -103,7 +103,7 @@ searchBtnEl.addEventListener("click", function () {
             // -- -- --  display current weather for each city
             currentForecastSearchedCityEl.textContent = data[0].name;
             
-            
+            // http://openweathermap.org/img/w/${forecast.weather[0].icon}.png
 
 
         });
